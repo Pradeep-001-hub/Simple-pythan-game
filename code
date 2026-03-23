@@ -1,0 +1,59 @@
+import random
+import time
+import os
+
+WIDTH = 7  
+
+def create_track():
+    return [" " for _ in range(WIDTH)]
+
+def place_player(track, position):
+    track[position] = "P"
+
+def place_obstacle(track):
+    pos = random.randint(0, WIDTH - 1)
+    track[pos] = "X"
+    return pos
+
+def display(track, score):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("Score:", score)
+    print("|" + "".join(track) + "|")
+
+def get_move(player_pos):
+    move = input("Move (a=left, d=right, enter=stay): ")
+    if move == "a" and player_pos > 0:
+        return player_pos - 1
+    elif move == "d" and player_pos < WIDTH - 1:
+        return player_pos + 1
+    return player_pos
+
+def check_collision(player_pos, obstacle_pos):
+    return player_pos == obstacle_pos
+
+def play_game():
+    player_pos = WIDTH // 2
+    score = 0
+
+    print("🎮 Dodge the Obstacles!")
+    time.sleep(1)
+
+    while True:
+        track = create_track()
+
+      
+      player_pos = get_move(player_pos)
+        place_player(track, player_pos)
+
+        
+ obstacle_pos = place_obstacle(track)
+
+        display(track, score)
+        if check_collision(player_pos, obstacle_pos):
+            print("💥 Game Over!")
+            print("Final Score:", score)
+            break
+
+        score += 1
+        time.sleep(0.5)
+play_game()
