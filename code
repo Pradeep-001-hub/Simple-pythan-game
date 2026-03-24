@@ -50,7 +50,7 @@ def play_game():
 
         display(track, score)
         if check_collision(player_pos, obstacle_pos):
-            print("💥 Game Over!")
+            print(" Game Over!")
             print("Final Score:", score)
             break
 
